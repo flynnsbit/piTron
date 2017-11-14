@@ -352,6 +352,7 @@ for x in range(0, 100):  # try 100 times
                     logger.info("new unhandled state %s" % state.rstrip())
 
     except serial.SerialException as str_error:
+        serialport.close()
         strError = str(str_error)
         print "Error communicating with Serial Interface"
         logger.error("%s" % strError.rstrip())
