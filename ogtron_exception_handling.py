@@ -356,7 +356,7 @@ for x in range(0, 100):  # try 100 times
         strError = str(str_error)
         print "Error communicating with Serial Interface"
         logger.error("%s" % strError.rstrip())
-        result = filechecker(True, 'I', '/home/pi/media/error/error_coms.mp4')
-        flags = dict.fromkeys(variablelist, False)
+        result = filechecker(False, 'I', '/home/pi/media/error/error_coms.mp4')
+        #flags = dict.fromkeys(variablelist, False)
         time.sleep(10)  # wait for 2 seconds before trying to fetch the data again
         pass
