@@ -1,3 +1,53 @@
+#!/usr/bin/env python3
+
+
+import subprocess
+import serial
+import logging
+import time
+import os.path
+# was going to use this for console logging. Moved to logging import
+#import sys
+
+#globals
+
+def filechecker(x,y,z):
+   # x = TRUE | FALSE - Clear the playlist
+   # y = Append, insert
+   # z = file path
+   #basically here we are going to do some sanity checking if the file exists and if it does then we call the omx$
+    result = ""
+    if x:
+        result = subprocess.check_output(['omxd', 'X'])
+    if (os.path.isfile(z)):
+       # file exists so lets do the needful
+        result = subprocess.check_output(['omxd', y, z])
+    return result
+
+
+
+variablelist = ["attract", "null_mode_active", "bank_down", "clu_lit", "clu_active", "clu_complete","disc_war_active","discmb_complete","disc_mb_active","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recog_start","recog_hit","sos_lit","sos_active","sos_complete","portal_lit","game_over","ball_over","zen"]
+flags = dict.fromkeys(variablelist, False)
+
+logger = logging.getLogger('tron_states')
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+
+
+hdlr = logging.FileHandler('/var/tmp/tron_states.log')
+hdlr.setLevel(logging.DEBUG)
+hdlr.setFormatter(formatter)
+
+consoleLog = logging.StreamHandler()
+consoleLog.setLevel(logging.DEBUG)
+consoleLog.setFormatter(formatter)
+
+
+logger.addHandler(hdlr) 
+logger.addHandler(consoleLog)
+
+
+
 for x in range(0, 100):  # try 100 times
     try:
         # msg.send()
