@@ -336,7 +336,7 @@ for x in range(0, 100):  # try 100 times
                             flags['sos_complete'] = True
 
                 elif '00' in state:
-                print("00 State")
+                    print("00 State")
                         #if not flags['bank_down']:
                             #logger.info("bank is going down")
                             #flags['bank_down'] = True
@@ -348,10 +348,9 @@ for x in range(0, 100):  # try 100 times
                         #else:
                             #logger.debug("bank is already down")
                 else:
-                         logger.info("new unhandled state %s" % state.rstrip())
+                    logger.info("new unhandled state %s" % state.rstrip())
 
-
-    except SerialException as str_error:
+    except serial.SerialException as str_error:
         print "Error communicating with Serial Interface"
         logger.error("%s" % str_error.rstrip())
 
