@@ -120,23 +120,22 @@ for x in range(0, 100):  # try 100 times
                             logger.debug(result)
                             flags['zen'] = True
 
-
                 elif '66' in state:
                         print("recog hit")
                         if not flags['recog_hit']:
-                    #result = subprocess.check_output(['omxd', 'X'])
-                    logger.debug(result)
-                    result = subprocess.check_output(['omxd', 'I', '/home/pi/media/recognizer/A-recognizer-start.mp4'])
-                    logger.debug(result)
+                            #result = subprocess.check_output(['omxd', 'X'])
+                            logger.debug(result)
+                            result = subprocess.check_output(['omxd', 'I', '/home/pi/media/recognizer/A-recognizer-start.mp4'])
+                            logger.debug(result)
                             flags['recog_hit'] = True
 
                 elif '4D' in state:
                         print("lcmb lit")
                         if not flags['lcmb_lit']:
-                    #result = subprocess.check_output(['omxd', 'X'])
-                    logger.debug(result)
-                    result = subprocess.check_output(['omxd', 'I', '/home/pi/media/lcmb/lcmb_lit.mp4'])
-                    logger.debug(result)
+                            #result = subprocess.check_output(['omxd', 'X'])
+                            logger.debug(result)
+                            result = subprocess.check_output(['omxd', 'I', '/home/pi/media/lcmb/lcmb_lit.mp4'])
+                            logger.debug(result)
                             flags['lcmb_lit'] = True
 
                 elif '4E' in state:
@@ -144,7 +143,7 @@ for x in range(0, 100):  # try 100 times
                         if not flags['lcmb_active']:
                         #    result = subprocess.check_output(['omxd', 'X'])
                             logger.debug(result)
-                    result = subprocess.check_output(['omxd', 'I', '/home/pi/media/lcmb/lcmb_active.mp4'])
+                            result = subprocess.check_output(['omxd', 'I', '/home/pi/media/lcmb/lcmb_active.mp4'])
                             result = subprocess.check_output(['omxd', 'a', '/home/pi/media/lcmb/lcmb_active.mp4'])
                             logger.debug(result)
                             flags['lcmb_active'] = True
@@ -164,7 +163,7 @@ for x in range(0, 100):  # try 100 times
                             #result = subprocess.check_output(['omxd', 'X'])
                             logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/home/pi/media/clu/clu_active.mp4'])                    
-                    result = subprocess.check_output(['omxd', 'a', '/home/pi/media/clu/clu_active.mp4'])
+                            result = subprocess.check_output(['omxd', 'a', '/home/pi/media/clu/clu_active.mp4'])
                             logger.debug(result)
                             flags['clu_active'] = True
 
