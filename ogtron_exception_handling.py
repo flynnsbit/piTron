@@ -49,6 +49,7 @@ logger.addHandler(consoleLog)
 
 
 for x in range(0, 100):  # try 100 times
+    print "Trying to start"
     try:
         # msg.send()
         # put your logic here
@@ -356,3 +357,4 @@ for x in range(0, 100):  # try 100 times
         logger.error("%s" % strError.rstrip())
         result = filechecker(True, 'I', '/home/pi/media/error/error_coms.mp4')
         time.sleep(10)  # wait for 2 seconds before trying to fetch the data again
+        pass
