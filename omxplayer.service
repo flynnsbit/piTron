@@ -1,0 +1,18 @@
+[Unit]
+Description=OMXPlayer on boot
+;Before=systemd-user-sessions.service
+Requires=omxd.service
+After=omxd.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+TimeoutStartSec=0
+
+ExecStart=/usr/bin/omxplayer -r --loop --vol -6000 --no-osd "/home/pi/Videos/Recognizer-HD-Big Arrow-Annimation.mp4"
+Type=simple
+User=pi
+
+ExecStop=/usr/bin/killall omxplayer
+User=pi

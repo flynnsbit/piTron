@@ -1,0 +1,18 @@
+[Unit]
+Description=Attrach on boot
+;Before=systemd-user-sessions.service
+Requires=omxd.service
+After=omxd.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+TimeoutStartSec=0
+
+ExecStart=/bin/sh /home/pi/media/boot.sh
+Type=simple
+User=root
+
+;ExecStop=/usr/bin/killall omxplayer
+User=root
