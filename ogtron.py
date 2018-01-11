@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+#v17
 
 import subprocess
 import serial
@@ -54,7 +54,7 @@ ver = version.pop(1)
 version = ver[4:-6]
 serialport.close()
 print version
-logger.info("SAM COMM Version %s" % version)
+logger.info("pitron_v17 - SAM COMM Version %s" % version)
 
 if version > 31:
      logger.info("version verfied")
@@ -74,6 +74,9 @@ for x in range(0, 100):  # try 100 times
             #print response            
             void = response.pop(0)
             for temp in response:
+             #print temp
+             srecord = temp[:2]
+             if "S3" in srecord:
                 data = temp
                 ball = data[27:-20]
                 players = data[16:-31]
@@ -81,7 +84,7 @@ for x in range(0, 100):  # try 100 times
                 #string = data[2:-4]
                 state = temp
                 state = state[20:-26]
-                
+                #print state
                 #print "Active Player:"
                 #print active_player
                 #print "Max Players:"
@@ -157,7 +160,7 @@ for x in range(0, 100):  # try 100 times
                         logger.info("zen")
                         if not flags['zen']:
                             #result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/flynn/zen.mp4'])
                             logger.debug(result)
                             flags['zen'] = True
@@ -166,7 +169,7 @@ for x in range(0, 100):  # try 100 times
                         logger.info("flynn lit")
                         if not flags['flynn_lit']:
                             #result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/flynn/flynn_lit.mp4'])
                             logger.debug(result)
                             flags['flynn_lit'] = True
@@ -185,9 +188,9 @@ for x in range(0, 100):  # try 100 times
                 elif '66' in state:
                         logger.info("recog hit")
                         if not flags['recog_hit']:
- #                           result = subprocess.check_output(['omxd', 'X'])
+                            result = subprocess.check_output(['omxd', 'X'])
                             logger.debug(result)
-                            result = subprocess.check_output(['omxd', 'I', '/media/usb1/recognizer/recognizer_hit.mp4'])
+                            result = subprocess.check_output(['omxd', 'a', '/media/usb1/recognizer/recognizer_hit.mp4'])
                             logger.debug(result)
                             flags['recog_hit'] = True
                             flags['zen'] = False
@@ -211,6 +214,8 @@ for x in range(0, 100):  # try 100 times
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/clu/clu_active.mp4'])                    
                             logger.debug(result)
                             flags['clu_active'] = True
+                            flags['clu_lit'] = False
+                            flags['clu_complete'] = False
 
                 elif '43' in state:
                         logger.info("clu complete")
@@ -226,8 +231,8 @@ for x in range(0, 100):  # try 100 times
                 elif '2E' in state:
                         logger.info("discmb_active")
                         if not flags['discmb_active']:
-                            result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #result = subprocess.check_output(['omxd', 'X'])
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'a', '/media/usb1/discmb/discmb_active.mp4'])
                             logger.debug(result)
                             flags['discmb_complete'] = False
@@ -238,7 +243,7 @@ for x in range(0, 100):  # try 100 times
                 elif '34' in state:
                         logger.info("discmb_restart")
                         if not flags['discmb_restart']:
- #                           result = subprocess.check_output(['omxd', 'X'])
+                            result = subprocess.check_output(['omxd', 'X'])
                             logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/discmb/discmb_restart.mp4'])
                             logger.debug(result)
@@ -255,10 +260,15 @@ for x in range(0, 100):  # try 100 times
                         logger.info("discmb_return")
                         if not flags['discmb_return']:
                             result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'a', '/media/usb1/discmb/discmb_active.mp4'])
                             logger.debug(result)
                             flags['discmb_return'] = True
+                            flags['discmb_complete'] = False
+                            flags['discmb_lit'] = False
+                            flags['discmb_active'] = True
+                            flags['recog_hit'] = False
+
 
                 elif '33' in state:
                         logger.info("discmb_complete")
@@ -301,24 +311,24 @@ for x in range(0, 100):  # try 100 times
                 elif '45' in state:
                         logger.info("gem_active")
                         if not flags['gem_active']:
-                            result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
-                            result = subprocess.check_output(['omxd', 'a', '/media/usb1/gem/gem_active.mp4'])
+                            #result = subprocess.check_output(['omxd', 'X'])
+                            #logger.debug(result)
+                            result = subprocess.check_output(['omxd', 'I', '/media/usb1/gem/gem_active.mp4'])
                             #result = subprocess.check_output(['omxd', 'a', '/media/usb1/gem/gem_active.mp4'])
                             logger.debug(result)
                             flags['gem_active'] = True
-                            flags['gem_compelte'] = False
+                            flags['gem_complete'] = False
 
                 elif '48' in state:
                         logger.info("gem_complete")
                         if not flags['gem_complete']:
-                            result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #result = subprocess.check_output(['omxd', 'X'])  #Do I need to clear and run gamestart?
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/gem/gem_complete.mp4'])
                             logger.debug(result)                            
-                            time.sleep(1)
-                            result = subprocess.check_output(['omxd', 'L', '/media/usb1/attract/game_start.mp4'])
-                            logger.debug(result)
+                            #time.sleep(1)
+                            #result = subprocess.check_output(['omxd', 'L', '/media/usb1/attract/game_start.mp4'])
+                            #logger.debug(result)
                             flags['gem_complete'] = True
                             flags['gem_active'] = False
 
@@ -326,7 +336,7 @@ for x in range(0, 100):  # try 100 times
                         logger.info("zuse_active")
                         if not flags['zuse_active']:
                             #result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/zuse/zuse_active.mp4'])
                             logger.debug(result)
                             flags['zuse_active'] = True
@@ -351,27 +361,29 @@ for x in range(0, 100):  # try 100 times
                             logger.debug(result)
                             flags['lcmb_lit'] = True
                             flags['lcmb_active'] = False
-                            flags['lcmb_compelte'] = False
+                            flags['lcmb_complete'] = False
 
                 elif '4E' in state:
                         logger.info("lcmb_active")
                         if not flags['lcmb_active']:
-                            result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
-                            result = subprocess.check_output(['omxd', 'a', '/media/usb1/lcmb/lcmb_active.mp4'])
+                            #result = subprocess.check_output(['omxd', 'X'])
+                            #logger.debug(result)
+                            result = subprocess.check_output(['omxd', 'I', '/media/usb1/lcmb/lcmb_active.mp4'])
                             logger.debug(result)
                             flags['lcmb_active'] = True
+                            flags['lcmb_complete'] = False
+                            flags['lcmb_lit'] = False
 
                 elif '53' in state:
                         logger.info("lcmb_complete")
                         if not flags['lcmb_complete']:
-                            #result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #result = subprocess.check_output(['omxd', 'X'])  #Do I need to clear and run gamestart?
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/lcmb/lcmb_complete.mp4'])
                             logger.debug(result)
-                            time.sleep(1)
-                            result = subprocess.check_output(['omxd', 'L', '/media/usb1/attract/game_start.mp4'])
-                            logger.debug(result)
+                            #time.sleep(1)
+                            #result = subprocess.check_output(['omxd', 'L', '/media/usb1/attract/game_start.mp4'])
+                            #logger.debug(result)
                             flags['lcmb_complete'] = True
                             flags['lcmb_lit'] = False
                             flags['lcmb_active'] = False
@@ -390,28 +402,30 @@ for x in range(0, 100):  # try 100 times
                 elif '39' in state:
                         logger.info("qmb_active")
                         if not flags['qmb_active']:
-                            result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
-                            result = subprocess.check_output(['omxd', 'a', '/media/usb1/qmb/qmb_active.mp4'])
+                            #result = subprocess.check_output(['omxd', 'X'])
+                            #logger.debug(result)
+                            result = subprocess.check_output(['omxd', 'I', '/media/usb1/qmb/qmb_active.mp4'])
                             #result = subprocess.check_output(['omxd', 'a', '/media/usb1/qmb/qmb_active.mp4'])
                             logger.debug(result)
                             flags['qmb_active'] = True
+                            flags['qmb_lit'] = False
+                            flags['qmb_complete'] = False
 
                 elif '3F' in state:
                         logger.info("qmb_complete")
                         if not flags['qmb_complete']:
-                            result = subprocess.check_output(['omxd', 'X'])
-                            logger.debug(result)
+                            #result = subprocess.check_output(['omxd', 'X']) #Do I need to clear and run gamestart?
+                            #logger.debug(result)
                             result = subprocess.check_output(['omxd', 'I', '/media/usb1/qmb/qmb_complete.mp4'])
                             logger.debug(result)
-                            time.sleep(1)
-                            result = subprocess.check_output(['omxd', 'L', '/media/usb1/attract/game_start.mp4'])
-                            logger.debug(result)
+                            #time.sleep(1)
+                            #result = subprocess.check_output(['omxd', 'L', '/media/usb1/attract/game_start.mp4'])
+                            #logger.debug(result)
                             flags['qmb_complete'] = True
                             flags['qmb_lit'] = False
                             flags['qmb_active'] = False
 
-                elif '6C' in state:
+                elif '6B' in state:
                         logger.info("sos_lit")
                         if not flags['sos_lit']:
                             #result = subprocess.check_output(['omxd', 'X'])
@@ -422,15 +436,17 @@ for x in range(0, 100):  # try 100 times
                             flags['sos_active'] = False
                             flags['sos_complete'] = False
 
-                elif '6B' in state:
+                elif '6C' in state:
                         logger.info("sos_active")
                         if not flags['sos_active']:
-                            #result = subprocess.check_output(['omxd', 'X'])
+                            result = subprocess.check_output(['omxd', 'X'])
                             logger.debug(result)
-                            result = subprocess.check_output(['omxd', 'I', '/media/usb1/sos/sos_active.mp4'])
+                            result = subprocess.check_output(['omxd', 'a', '/media/usb1/sos/sos_active.mp4'])
                             #result = subprocess.check_output(['omxd', 'a', '/media/usb1/sos/sos_active.mp4'])
                             logger.debug(result)
                             flags['sos_active'] = True
+                            flags['sos_lit'] = False
+                            flags['sos_complete'] = False
 
                 elif '78' in state:
                         logger.info("sos_complete")
@@ -454,6 +470,7 @@ for x in range(0, 100):  # try 100 times
                             result = subprocess.check_output(['omxd', 'a', '/media/usb1/portal/portal_active.mp4'])
                             logger.debug(result)
                             flags['portal_active'] = True
+                            flags['portal_complete'] = False
 
                 elif '8C' in state:
                         logger.info("portal_complete")
