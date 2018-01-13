@@ -25,7 +25,10 @@ def filechecker(x,y,z):
 
 #trying to build logic for a 4 player game, how do you handle dict for each flags without having 4 sets if if then statements looping
 modelist = ["attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
-flags = dict.fromkeys(modelist, False)
+golden_flags = dict.fromkeys(modelist, False)
+
+#global
+flagInitialization = True
 
 #logging states 
 logger = logging.getLogger('tron_states')
@@ -95,6 +98,12 @@ for x in range(0, 100):  # try 100 times
                 print "Max Players:"
                 print players
 
+                #means we need to initialize the flags for the players
+                if flagInitialization:
+                    playerFlags = list( dict(golden_flags) for i in range(playercount) )
+                    flagInitialization = False
+                
+                flags = playerFlags[active_player]
                 if '01' in state:
                     if not flags['attract_mode_active']:
                         logger.info("Attract is running")
