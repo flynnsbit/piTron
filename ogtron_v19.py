@@ -23,9 +23,11 @@ def filechecker(x,y,z):
         result = subprocess.check_output(['omxd', y, z])
     return result
 
-variablelist = ["attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
-flags = dict.fromkeys(variablelist, False)
+#trying to build logic for a 4 player game, how do you handle dict for each flags without having 4 sets if if then statements looping
+modelist = ["attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
+flags = dict.fromkeys(modelist, False)
 
+#logging states 
 logger = logging.getLogger('tron_states')
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(message)s')
@@ -79,7 +81,7 @@ for x in range(0, 100):  # try 100 times
             for temp in response:
              #print temp
              srecord = temp[:2]
-             if "S3" in srecord:
+             if "S3" in srecord:         #crc checker for string, if S3 not there start over
                 data = temp
                 ball = data[27:-20]
                 players = data[16:-31]
@@ -88,10 +90,10 @@ for x in range(0, 100):  # try 100 times
                 state = temp
                 state = state[20:-26]
                 #print state
-                #print "Active Player:"
-                #print active_player
-                #print "Max Players:"
-                #print players
+                print "Active Player:"
+                print active_player
+                print "Max Players:"
+                print players
 
                 if '01' in state:
                     if not flags['attract_mode_active']:
@@ -99,7 +101,7 @@ for x in range(0, 100):  # try 100 times
                         result = filechecker(True, 'a', '/media/usb1/attract/attract.mp4')
                         logger.debug(result)
                         logger.info("setting attract mode %s" % result)
-                        flags = dict.fromkeys(variablelist, False)
+                        flags = dict.fromkeys(modelist, False)
                         flags['attract_mode_active'] = True
                         break
                     else:
@@ -110,16 +112,16 @@ for x in range(0, 100):  # try 100 times
                         logger.info("Game Started - Play Enter the Grid / default video being set to game_start")
                         if not flags['null_mode_active']:   
                             #Code for Player and ball detection.  Where does this go?  Should it be a functions with 4 dictionary?
-                          #  if '0' in current_player:
+                          #  if '0' in active_player:
                           #       if not flags['player_active']:
                           #            print current_player
                           #            logger.info("Player 1")
                                       #run attract stern video
-                          #            result = filechecker(True, 'I', '/media/usb1/attract/player_1.mp4')
+                          #            result = filechecker(False, 'I', '/media/usb1/attract/player_1.mp4')
                           #            time.sleep(5)
                           #            logger.debug(result)
                           #            logger.info("player active %s" % result)
-                          #            flags = dict.fromkeys(variablelist, False)
+                          #            flags = dict.fromkeys(modelist, False)
                           #            flags['player_active'] = True
                         
                           #  else:
@@ -128,7 +130,7 @@ for x in range(0, 100):  # try 100 times
                             result = filechecker(True, 'a', '/media/usb1/attract/game_start.mp4')
                             logger.debug(result)
                             logger.info("Enter The Grid Video Playing %s" % result)
-                            flags = dict.fromkeys(variablelist, False)
+                            flags = dict.fromkeys(modelist, False)
                             flags['null_mode_active'] = True
 
                 elif '67' in state:
@@ -153,7 +155,7 @@ for x in range(0, 100):  # try 100 times
                             logger.debug(result)
                             flags['game_over'] = True
                             flags['null_mode_active'] = False
-                            flags = dict.fromkeys(variablelist, False)
+                            flags = dict.fromkeys(modelist, False)
 
                 elif '5D' in state:
                         logger.info("zen")
