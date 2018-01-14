@@ -489,7 +489,7 @@ for x in range(0, 100):  # try 100 times
                     flags['portal_complete'] = False
                     flags['default_state_run'] = True
                     flags[default_state_map[flags['default_state']]] = False
-                    logger.info("we just set %s to %s" % default_state_map[flags['default_state']], flags[default_state_map[flags['default_state']]])
+                    logger.info("we just set %s to %s" % (default_state_map[flags['default_state']], flags[default_state_map[flags['default_state']]]))
 
                 else:
                     logger.info("new unhandled state %s" % state.rstrip())
