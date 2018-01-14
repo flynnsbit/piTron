@@ -470,7 +470,7 @@ for x in range(0, 100):  # try 100 times
                     logger.info("No Active States")
 
                 elif '19' in state:
-                    logger.info("Ball Ended / Clearing Active modes and Complete modes")
+                    logger.info("Player %s Ball Ended / Clearing Active modes and Complete modes" % active_player)
                     flags['discmb_active'] = False
                     flags['discmb_complete'] = False
                     flags['clu_active'] = False
