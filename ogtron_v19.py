@@ -87,8 +87,8 @@ for x in range(0, 100):  # try 100 times
              if "S3" in srecord:         #crc checker for string, if S3 not there start over
                 data = temp
                 ball = data[27:-20]
-                players = data[16:-31]
-                active_player = data[17:-30]
+                players = int(data[16:-31])
+                active_player = int(data[17:-30])
                 #string = data[2:-4]
                 state = temp
                 state = state[20:-26]
@@ -100,18 +100,19 @@ for x in range(0, 100):  # try 100 times
 
                 #means we need to initialize the flags for the players
                 if flagInitialization:
-                    playerFlags = list( dict(golden_flags) for i in range(playercount) )
+                    playerFlags = list( dict(golden_flags) for i in range(players) )
                     flagInitialization = False
                 
                 flags = playerFlags[active_player]
+                globalFlags = playerFlags[len(playerFlags)-1]
                 if '01' in state:
-                    if not flags['attract_mode_active']:
+                    if not globalFlags['attract_mode_active']:
                         logger.info("Attract is running")
                         result = filechecker(True, 'a', '/media/usb1/attract/attract.mp4')
                         logger.debug(result)
                         logger.info("setting attract mode %s" % result)
-                        flags = dict.fromkeys(modelist, False)
-                        flags['attract_mode_active'] = True
+                        #globalFlags = dict.fromkeys(modelist, False)
+                        globalFlags['attract_mode_active'] = True
                         break
                     else:
                         logger.debug("attract already running")
