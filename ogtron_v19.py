@@ -24,7 +24,7 @@ def filechecker(x,y,z):
     return result
 
 #trying to build logic for a 4 player game, how do you handle dict for each flags without having 4 sets if if then statements looping
-modelist = ["attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
+modelist = ["default_mode", "attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
 golden_flags = dict.fromkeys(modelist, False)
 
 #global
@@ -98,6 +98,8 @@ for x in range(0, 100):  # try 100 times
                 print active_player
                 print "Max Players:"
                 print players
+                print "length of playerFlags"
+                print len(playerFlags)
 
                 #means we need to initialize the global flags for the game
                 if len(playerFlags)==0:
