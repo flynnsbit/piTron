@@ -98,10 +98,18 @@ for x in range(0, 100):  # try 100 times
                 print "Max Players:"
                 print players
 
-                #means we need to initialize the flags for the players
-                if flagInitialization:
-                    playerFlags = list( dict(golden_flags) for i in range(players) )
-                    flagInitialization = False
+                #means we need to initialize the global flags for the game
+                if len(playerFlags) = 0:
+                    playerFlags.insert(len(playerFlags),dict(golden_flags))
+
+                #Then we come in and say is the current player (0 based) represented in the playerFlags list?
+                if len(playerFlags)-1 < active_player
+                    playerFlags.insert(len(playerFlags)-1,dict(golden_flags))
+
+
+#                if flagInitialization:
+#                    playerFlags = list( dict(golden_flags) for i in range(players) )
+#                    flagInitialization = False
                 
                 flags = playerFlags[active_player]
                 globalFlags = playerFlags[len(playerFlags)-1]
@@ -113,6 +121,7 @@ for x in range(0, 100):  # try 100 times
                         logger.info("setting attract mode %s" % result)
                         #globalFlags = dict.fromkeys(modelist, False)
                         globalFlags['attract_mode_active'] = True
+                        playerFlags = list()
                         break
                     else:
                         logger.debug("attract already running")
