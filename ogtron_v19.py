@@ -24,7 +24,7 @@ def filechecker(x,y,z):
     return result
 
 #trying to build logic for a 4 player game, how do you handle dict for each flags without having 4 sets if if then statements looping
-modelist = ["default_mode", "attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
+modelist = ["default_state", "default_state_run", "attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
 golden_flags = dict.fromkeys(modelist, False)
 
 #global
@@ -121,6 +121,12 @@ for x in range(0, 100):  # try 100 times
                 
                 flags = playerFlags[active_player]
                 globalFlags = playerFlags[len(playerFlags)-1]
+
+                if flags['default_state_run']:
+                    state = flags['default_state']
+                    logger.info("Running the default state of %s" % state)
+                    flags['default_state_run'] = False
+                
                 if '01' in state:
                     if not globalFlags['attract_mode_active']:
                         logger.info("Attract is running")
@@ -160,6 +166,9 @@ for x in range(0, 100):  # try 100 times
                             logger.info("Enter The Grid Video Playing %s" % result)
                             flags = dict.fromkeys(modelist, False)
                             flags['null_mode_active'] = True
+                            flags['default_state'] = '61'
+                            logger.info("Set the default state to %s" % state)
+
 
                 elif '67' in state:
                         #Needs to be default state if bank is not down 
@@ -175,7 +184,9 @@ for x in range(0, 100):  # try 100 times
                             flags['discmb_restart'] = False
                             flags['discmb_return'] = False
                             flags['recog_hit'] = False
-           
+                            flags['default_state'] = '67'
+                            logger.info("Set the default state to %s" % state)
+
                 elif '26' in state:
                         logger.info("game over")
                         if not flags['game_over']:
@@ -208,7 +219,7 @@ for x in range(0, 100):  # try 100 times
                             logger.debug(result)
                             flags['flynn_complete'] = True
                             flags['flynn_lit'] = False	
-							
+
                 elif '66' in state:
                         logger.info("Recognizer Hit / Setting default base video to recognizer_hit")
                         if not flags['recog_hit']:
@@ -216,6 +227,8 @@ for x in range(0, 100):  # try 100 times
                             logger.debug(result)
                             flags['recog_hit'] = True
                             flags['zen'] = False
+                            flags['default_state'] = '66'
+                            logger.info("Set the default state to %s" % state)
 
                 elif '49' in state:
                         logger.info("clu lit")
@@ -467,6 +480,7 @@ for x in range(0, 100):  # try 100 times
                     flags['sos_complete'] = False
                     flags['portal_active'] = False
                     flags['portal_complete'] = False
+                    flags['default_state_run'] = True
                 else:
                     logger.info("new unhandled state %s" % state.rstrip())
                     
