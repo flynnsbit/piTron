@@ -174,9 +174,10 @@ for x in range(0, 100):  # try 100 times
                         if not flags['game_over']:
                             result = filechecker(True, 'I', '/media/usb1/attract/game_over.mp4')
                             logger.debug(result)
+                               #we do this first so we can handle the game over looping until the next player starts OR the video terminates and we go back to attract mode
+                            flags = dict.fromkeys(modelist, False)
                             flags['game_over'] = True
                             flags['null_mode_active'] = False
-                            flags = dict.fromkeys(modelist, False)
 
                 elif '5D' in state:
                         logger.info("zen")
