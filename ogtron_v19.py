@@ -109,6 +109,8 @@ for x in range(0, 100):  # try 100 times
                 if len(playerFlags)-1 < active_player:
                     playerFlags.insert(len(playerFlags)-1,dict(golden_flags))
 
+                if len(playerFlags)-1 < players:
+                    playerFlags = list( dict(golden_flags) for i in range(players) )
 
 #                if flagInitialization:
 #                    playerFlags = list( dict(golden_flags) for i in range(players) )
