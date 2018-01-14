@@ -450,6 +450,8 @@ for x in range(0, 100):  # try 100 times
                     flags['portal_complete'] = False
                 else:
                     logger.info("new unhandled state %s" % state.rstrip())
+                    
+                playerFlags[active_player] = flags
 
     except serial.SerialException as str_error:
         serialport.close()
