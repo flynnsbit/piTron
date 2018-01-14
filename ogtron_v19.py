@@ -122,7 +122,7 @@ for x in range(0, 100):  # try 100 times
                         logger.info("setting attract mode %s" % result)
                         #globalFlags = dict.fromkeys(modelist, False)
                         globalFlags['attract_mode_active'] = True
-                        playerFlags = list()
+                        #playerFlags = list()
                         break
                     else:
                         logger.debug("attract already running")
