@@ -29,6 +29,7 @@ golden_flags = dict.fromkeys(modelist, False)
 
 #global
 flagInitialization = True
+playerFlags=list()
 
 #logging states 
 logger = logging.getLogger('tron_states')
