@@ -27,6 +27,13 @@ def filechecker(x,y,z):
 modelist = ["default_state", "default_state_run", "attract_mode_active", "null_mode_active", "bank_down", "discmb_restart", "discmb_return", "flynn_lit", "flynn_complete", "zen", "clu_lit", "clu_active", "clu_complete","discmb_active","discmb_complete","discmb_lit","tron_active","tron_complete","gem_active","gem_complete","zuse_active","zuse_complete","lcmb_lit","lcmb_active","lcmb_complete","qmb_lit","qmb_active","qmb_complete","recognizer_started","recog_hit","sos_lit","sos_active","sos_complete","portal_active", "portal_complete", "game_over"]
 golden_flags = dict.fromkeys(modelist, False)
 
+#here we store the state ID to the flag map so we can reset a default state at ball loss
+default_state_map = {
+'61': 'null_mode_active',
+'67': 'discmb_lit',
+'66': 'recog_hit'
+}
+
 #global
 flagInitialization = True
 playerFlags=list()
@@ -481,6 +488,8 @@ for x in range(0, 100):  # try 100 times
                     flags['portal_active'] = False
                     flags['portal_complete'] = False
                     flags['default_state_run'] = True
+                    flags[default_state_map[flags['default_state']]] = False
+                                        
                 else:
                     logger.info("new unhandled state %s" % state.rstrip())
                     
