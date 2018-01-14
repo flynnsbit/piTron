@@ -109,6 +109,9 @@ for x in range(0, 100):  # try 100 times
 #                if len(playerFlags)-1 < active_player:
 #                    playerFlags.insert(len(playerFlags)-1,dict(golden_flags))
 
+#                if len(playerFlags) > players:
+#                    playerFlags = list( dict(golden_flags) for i in range(players+1) )
+
                 if len(playerFlags)-1 < players:
                     playerFlags = list( dict(golden_flags) for i in range(players+1) )
 
@@ -244,7 +247,7 @@ for x in range(0, 100):  # try 100 times
                 elif '2E' in state:
                         logger.info("discmb_active / appending but not clearing the discmb_active video")
                         if not flags['discmb_active']:
-                            result = filechecker(False, 'a', '/media/usb1/discmb/discmb_active.mp4')
+                            result = filechecker(True, 'a', '/media/usb1/discmb/discmb_active.mp4')
                             logger.debug(result)
                             flags['discmb_complete'] = False
                             flags['discmb_lit'] = False
