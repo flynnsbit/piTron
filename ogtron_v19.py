@@ -99,11 +99,11 @@ for x in range(0, 100):  # try 100 times
                 print players
 
                 #means we need to initialize the global flags for the game
-                if len(playerFlags) = 0:
+                if len(playerFlags)==0:
                     playerFlags.insert(len(playerFlags),dict(golden_flags))
 
                 #Then we come in and say is the current player (0 based) represented in the playerFlags list?
-                if len(playerFlags)-1 < active_player
+                if len(playerFlags)-1 < active_player:
                     playerFlags.insert(len(playerFlags)-1,dict(golden_flags))
 
 
