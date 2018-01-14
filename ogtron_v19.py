@@ -130,6 +130,7 @@ for x in range(0, 100):  # try 100 times
                 elif '61' in state:
                         #Default state if bank is up
                         logger.info("Game Started - Play Enter the Grid / default video being set to game_start")
+                        globalFlags['attract_mode_active'] = False
                         if not flags['null_mode_active']:   
                             #Code for Player and ball detection.  Where does this go?  Should it be a functions with 4 dictionary?
                           #  if '0' in active_player:
