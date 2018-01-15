@@ -100,13 +100,13 @@ for x in range(0, 100):  # try 100 times
                 #string = data[2:-4]
                 state = temp
                 state = state[20:-26]
-                #print state
-                print "Active Player:"
-                print active_player
-                print "Max Players:"
-                print players
-                print "length of playerFlags"
-                print len(playerFlags)
+                print state
+                #print "Active Player:"
+                #print active_player
+                #print "Max Players:"
+                #print players
+                #print "length of playerFlags"
+                #print len(playerFlags)
 
                 #means we need to initialize the global flags for the game
 #                if len(playerFlags)==0:
