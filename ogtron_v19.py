@@ -490,6 +490,7 @@ for x in range(0, 100):  # try 100 times
                     flags['default_state_run'] = True
                     flags[default_state_map[flags['default_state']]] = False
                     logger.info("we just set %s to %s" % (default_state_map[flags['default_state']], flags[default_state_map[flags['default_state']]]))
+                    time.sleep(1)
 
                 else:
                     logger.info("new unhandled state %s" % state.rstrip())
