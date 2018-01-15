@@ -286,6 +286,7 @@ for x in range(0, 100):  # try 100 times
                             flags['discmb_lit'] = False
                             flags['discmb_active'] = False
                             flags['discmb_return'] = False
+                            flags['default_state'] = '61'
                            
                 elif '36' in state:
                         logger.info("discmb_return / setting discmb_active as the default video and clearing playlist")
@@ -311,6 +312,7 @@ for x in range(0, 100):  # try 100 times
                             flags['discmb_lit'] = False
                             flags['discmb_restart'] = False
                             flags['discmb_return'] = False
+                            flags['default_state'] = '61'
 
 #TRON DISABLED FOR NOW 
                 elif '65' in state:
