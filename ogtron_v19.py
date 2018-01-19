@@ -95,8 +95,8 @@ for x in range(0, 100):  # try 100 times
              if "S3" in srecord:         #crc checker for string, if S3 not there start over
                 data = temp
                 ball = data[27:-20]
-                players = int(data[16:-31])
-                active_player = int(data[17:-30])
+                players = int(data[16:-31]) # starts with 1
+                active_player = int(data[17:-30]) # starts at 0
                 #string = data[2:-4]
                 state = temp
                 state = state[20:-26]
@@ -129,10 +129,20 @@ for x in range(0, 100):  # try 100 times
                 flags = playerFlags[active_player]
                 globalFlags = playerFlags[len(playerFlags)-1]
 
-                if flags['default_state_run']:
-                    state = flags['default_state']
-                    logger.info("Running the default state of %s" % state)
-                    flags['default_state_run'] = False
+                if (players != 1):
+                    #single player games mean nothing to us so just keep going.
+                    if (globalFlags['ball_end'] = True):
+                        #the ball has ended
+                        if (active_player != globalFlags['ball_end_player']):
+                            #we are no longer on the same player
+                            globalFlags['ball_end'] = False
+                            if flags['default_state_run']:
+                                state = flags['default_state']
+                                logger.info("Running the default state of %s" % state)
+                                flags['default_state_run'] = False
+                        else:
+                            # sending back to ball drain
+                            state = '19'
                 
                 if '01' in state:
                     if not globalFlags['attract_mode_active']:
@@ -491,8 +501,11 @@ for x in range(0, 100):  # try 100 times
                     flags['portal_complete'] = False
                     flags['default_state_run'] = True
                     flags[default_state_map[flags['default_state']]] = False
+                    globalFlags['ball_end'] = True
+                    globalFlags['ball_end_player'] = active_player
+
                     logger.info("we just set %s to %s" % (default_state_map[flags['default_state']], flags[default_state_map[flags['default_state']]]))
-                    time.sleep(1)
+                    #time.sleep(1)
 
                 else:
                     logger.info("new unhandled state %s" % state.rstrip())
