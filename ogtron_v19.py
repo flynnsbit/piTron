@@ -131,7 +131,7 @@ for x in range(0, 100):  # try 100 times
 
                 if (players != 1):
                     #single player games mean nothing to us so just keep going.
-                    if (globalFlags['ball_end'] = True):
+                    if (globalFlags['ball_end']):
                         #the ball has ended
                         if (active_player != globalFlags['ball_end_player']):
                             #we are no longer on the same player
@@ -143,7 +143,7 @@ for x in range(0, 100):  # try 100 times
                         else:
                             # sending back to ball drain
                             state = '19'
-                
+
                 if '01' in state:
                     if not globalFlags['attract_mode_active']:
                         logger.info("Attract is running")
