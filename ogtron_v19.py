@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#v19_debug
+#v38_debug
 #Changes - Added try with exception logging for version checker
 
 import subprocess
@@ -61,7 +61,7 @@ try:
      version = ver[4:-6]
      serialport.close()
      print version
-     logger.info("pitron_v19 - SAM COMM Version %s" % version)
+     logger.info("pitron_v38 - SAM COMM Version %s" % version)
 
 except serial.SerialException as str_error:
         serialport.close()
