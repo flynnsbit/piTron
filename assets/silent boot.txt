@@ -1,0 +1,4 @@
+console=tty3
+loglevel=3
+vt.global_cursor_default=0
+logo.nologo
